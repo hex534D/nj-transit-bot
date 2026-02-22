@@ -1,0 +1,32 @@
+{
+  "name": "nj-transit-bot",
+  "version": "1.0.0",
+  "description": "NJ Transit (Light Rail) alerts to Telegram",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "test:telegram": "tsx scripts/test-telegram.ts",
+    "test:station-query": "tsx scripts/test-station-query.ts",
+    "build": "tsup src/index.ts --format esm --clean",
+    "start": "node dist/index.js",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write \"src/**/*.ts\""
+  },
+  "dependencies": {
+    "axios": "^1.6.5",
+    "chalk": "^5.6.2",
+    "dotenv": "^16.4.5",
+    "envalid": "^8.1.1",
+    "graphql-request": "^6.1.0",
+    "node-cron": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "@types/node-cron": "^3.0.11",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "packageManager": "pnpm@10.29.1"
+}
