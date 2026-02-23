@@ -7,6 +7,7 @@
     "dev": "tsx watch src/index.ts",
     "test:telegram": "tsx scripts/test-telegram.ts",
     "test:station-query": "tsx scripts/test-station-query.ts",
+    "test:light-rail-advisories": "tsx scripts/test-light-rail-rss.query.ts",
     "build": "tsup src/index.ts --format esm --clean",
     "start": "node dist/index.js",
     "lint": "eslint src/**/*.ts",
@@ -17,6 +18,7 @@
     "chalk": "^5.6.2",
     "dotenv": "^16.4.5",
     "envalid": "^8.1.1",
+    "fast-xml-parser": "^5.3.7",
     "graphql-request": "^6.1.0",
     "node-cron": "^3.0.3"
   },

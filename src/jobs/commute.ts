@@ -3,8 +3,8 @@ import { telegram } from '../services/notifications.js';
 import { logger } from '../utils/logger.js';
 import { formatDate, formatTripDuration } from '../utils/util.js';
 
-export async function checkMorningCommute() {
-  logger.info('Checking morning commute trains...');
+export async function checkCommute(timeOfDay = 'morning') {
+  logger.info(`Checking ${timeOfDay} commute trains...`);
 
   try {
     const params = {
@@ -21,7 +21,7 @@ export async function checkMorningCommute() {
       await telegram.sendMessage(
         '⚠️ No trains found for your route',
         {
-          title: '🚆 Morning Commute',
+          title: `🚆 ${timeOfDay.charAt(0).toUpperCase() + timeOfDay.slice(1)} Commute`,
         },
       );
       return;
@@ -41,11 +41,11 @@ export async function checkMorningCommute() {
     ].join('\n');
 
     await telegram.sendMessage(message, {
-      title: '🌅 Morning Commute',
+      title: `🌅 ${timeOfDay.charAt(0).toUpperCase() + timeOfDay.slice(1)} Commute`,
     });
 
-    logger.info('Morning commute alert sent');
+    logger.info(`${timeOfDay} commute alert sent`);
   } catch (error) {
-    logger.error('Failed to check morning commute:', error);
+    logger.error(`Failed to check ${timeOfDay} commute:`, error);
   }
 }

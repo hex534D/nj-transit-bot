@@ -35,8 +35,6 @@ export async function getLightRailSchedule(params: ScheduleParams): Promise<Trip
     params,
   );
 
-  console.log(response);
-
   return response.getLightRailSchedule?.trips;
 }
 
@@ -69,9 +67,7 @@ export async function getNextTrain(
 ): Promise<Trips | null> {
   const trips = await getLightRailSchedule(params);
 
-  // if (trips.length === 0) return null;
-  console.log(params);
-  console.log(trips);
+  if (trips.length === 0) return null;
 
   const currentTime = getLocalTime();
 

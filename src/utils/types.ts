@@ -23,5 +23,15 @@ export type ScheduleParams = {
   line: string;
   origin: string;
   destination: string;
-  date?: string; // Optional, format: "MM/DD/YYYY" or similar
+  date?: string; // format: "MM/DD/YYYY" or similar
 };
+
+// Custom fields for NJ Transit RSS (if they have custom fields)
+export type NJTransitAdvisory = {
+  title: string;
+  link: string;
+  pubDate: string;
+  description: string;
+  advisoryAlert?: string;
+  guid: string;
+}
