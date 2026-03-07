@@ -48,9 +48,15 @@ export const env = cleanEnv(process.env, {
     desc: 'NJ Transit GraphQL API endpoint',
     devDefault: 'https://api.example.com/graphql',
   }),
+
   NJ_TRANSIT_API_KEY: str({
     desc: 'NJ Transit API key',
     default: '',
+  }),
+
+  NJ_TRANSIT_LIGHT_RAIL_ADVISORIES_RSS: url({
+    desc: 'URL for NJ Transit Light Rail advisories RSS feed',
+    default: 'http://njtransit.com/rss/LightRailAdvisories_feed.xml',
   }),
 
   // Application Configuration

@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'nj-transit-bot',
-      script: 'dist/index.js',
+      script: 'dist/index.mjs',
       instances: 1,
       autorestart: true,
       watch: false,

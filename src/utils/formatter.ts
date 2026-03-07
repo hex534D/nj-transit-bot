@@ -3,9 +3,7 @@ import { NJTransitAdvisory } from './types';
 export function formatAdvisory(advisory: NJTransitAdvisory): string {
   // Strip HTML tags from content
   const content =
-    advisory.title?.replace(/<[^>]*>/g, '') ||
-    advisory.description ||
-    '';
+    advisory.description || advisory.title?.replace(/<[^>]*>/g, '') || '';
 
   // Truncate if too long
   const maxLength = 500;

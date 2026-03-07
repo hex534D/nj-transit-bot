@@ -1,5 +1,6 @@
 import { XMLParser } from 'fast-xml-parser';
 import { logger } from '../utils/logger.js';
+import { env } from '../config/env.js';
 import { NJTransitAdvisory } from '../utils/types.js';
 import axios from 'axios';
 
@@ -8,17 +9,13 @@ const parser = new XMLParser({
   attributeNamePrefix: '@_',
 });
 
-const RSS_URLS = {
-  lightRail: 'http://njtransit.com/rss/LightRailAdvisories_feed.xml',
-} as const;
-
 export async function getLightRailAdvisories(): Promise<
   NJTransitAdvisory[]
 > {
   try {
     logger.debug('Fetching Light Rail advisories...');
 
-    const response = await axios.get(RSS_URLS.lightRail);
+    const response = await axios.get(env.NJ_TRANSIT_LIGHT_RAIL_ADVISORIES_RSS);
     const result = parser.parse(response.data);
 
     const items = result.rss.channel.item;
@@ -67,8 +64,8 @@ export function filterAdvisories(
 }
 
 // Check if there are any service alerts/delays
-export async function hasActiveDelays(): Promise<boolean> {
-  const advisories = await getLightRailAdvisories();
+export async function advisoriesWithDelays(): Promise<NJTransitAdvisory[]> {
+  const advisories = await getNewAdvisories();
 
   const delayKeywords = [
     'delay',
@@ -78,7 +75,7 @@ export async function hasActiveDelays(): Promise<boolean> {
     'service change',
   ];
 
-  const delays = filterAdvisories(advisories, delayKeywords);
+  const delayedAdvisories = filterAdvisories(advisories, delayKeywords);
 
-  return delays.length > 0;
+  return delayedAdvisories;
 }
