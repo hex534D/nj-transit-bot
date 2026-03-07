@@ -9,7 +9,7 @@
     "test:station-query": "tsx scripts/test-station-query.ts",
     "test:light-rail-advisories": "tsx scripts/test-light-rail-rss.query.ts",
     "build": "tsup src/index.ts --format esm --clean",
-    "start": "node dist/index.js",
+    "start": "node dist/index.mjs",
     "lint": "eslint src/**/*.ts",
     "format": "prettier --write \"src/**/*.ts\""
   },
