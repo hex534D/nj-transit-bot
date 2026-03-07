@@ -3,10 +3,10 @@ import { Trips } from './types';
 // Returns current time in AM/PM format
 export const getLocalTime = () =>
   new Date().toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    minute: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
     hour12: true,
-  });
+  }).toString();
 
 export const formatDate = (date: Date) => {
   const month = String(date.getMonth() + 1).padStart(2, '0');
