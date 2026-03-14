@@ -29,24 +29,18 @@ export async function getLightRailAdvisories(): Promise<
   }
 }
 
-// Check for new advisories since last check
-const seenAdvisories = new Set<string>();
-
-export async function getNewAdvisories(): Promise<
-  NJTransitAdvisory[]
-> {
+// Return advisories published within the last `windowMinutes` minutes.
+// Stateless — no in-memory set needed, safe for ephemeral containers.
+export async function getNewAdvisories(
+  windowMinutes = 20,
+): Promise<NJTransitAdvisory[]> {
   const advisories = await getLightRailAdvisories();
+  const cutoff = Date.now() - windowMinutes * 60 * 1000;
 
-  const newAdvisories = advisories.filter((advisory) => {
-    const id = advisory.guid || advisory.link;
-    if (seenAdvisories.has(id)) {
-      return false;
-    }
-    seenAdvisories.add(id);
-    return true;
+  return advisories.filter((advisory) => {
+    const published = new Date(advisory.pubDate).getTime();
+    return !isNaN(published) && published >= cutoff;
   });
-
-  return newAdvisories;
 }
 
 // Filter advisories by keywords
@@ -64,8 +58,8 @@ export function filterAdvisories(
 }
 
 // Check if there are any service alerts/delays
-export async function advisoriesWithDelays(): Promise<NJTransitAdvisory[]> {
-  const advisories = await getNewAdvisories();
+export async function advisoriesWithDelays(windowMinutes = 20): Promise<NJTransitAdvisory[]> {
+  const advisories = await getNewAdvisories(windowMinutes);
 
   const delayKeywords = [
     'delay',

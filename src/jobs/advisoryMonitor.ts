@@ -1,13 +1,13 @@
-import { advisoriesWithDelays, getLightRailAdvisories, getNewAdvisories } from '../services/advisories.js';
+import { advisoriesWithDelays } from '../services/advisories.js';
 import { formatAdvisory } from '../utils/formatter.js';
 import { telegram } from '../services/notifications.js';
 import { logger } from '../utils/logger.js';
 
-export async function monitorAdvisories() {
+export async function monitorAdvisories(windowMinutes = 20) {
   logger.info('Checking for new advisories...');
 
   try {
-    const newAdvisories = await advisoriesWithDelays();
+    const newAdvisories = await advisoriesWithDelays(windowMinutes);
 
     if (newAdvisories.length === 0) {
       logger.debug('No new advisories');

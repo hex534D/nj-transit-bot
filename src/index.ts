@@ -8,19 +8,19 @@ async function main() {
   logger.info('NJ Transit Bot starting...');
   logger.info(`Environment: ${env.NODE_ENV}`);
 
-  // Morning commute check: Mon-Fri at 8:00 AM
-  cron.schedule('0 8 * * 1-5', async () => {
+  // Morning commute check: Mon-Fri at 8:00 AM, +4 adjusting according to railway UTC time
+  cron.schedule('0 12 * * 1-5', async () => {
     await checkCommute();
   });
 
   // Evening commute check: Mon-Fri at 4:00 PM
-  cron.schedule('0 16 * * 1-5', async () => {
+  cron.schedule('0 20 * * 1-5', async () => {
     await checkCommute('evening');
   });
 
-  // Real-time monitoring: Every 15 minutes for advisories
-  cron.schedule('*/15 * * * *', async () => {
-    await monitorAdvisories();
+  // Advisory monitoring: Every 15 min on weekdays 7 AM – 8 PM
+  cron.schedule('*/15 7-20 * * 1-5', async () => {
+    await monitorAdvisories(15);
   });
 
   logger.info('Cron jobs scheduled. Bot is running...');
